@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int width = 500,
-	height = 500;
+int width = 500, height = 500;
 
-int rot = 1;
+int rot = 0;
+int y_pos = 0;
+int x_pos = 0;
 
-// Declarações
 void init(void);
 void display(void);
 void keyboard(unsigned char key, int x, int y);
@@ -30,52 +30,66 @@ int main(int argc, char **argv)
 
 void init(void)
 {
-	glClearColor(0.0, 0.0, 0.0, 0.0);	// Cor do buffer
+	glClearColor(0.0, 1.0, 0.0, 1.0);		// Cor do buffer
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, width, 0, height, -1, 1); // Projeção ortogonal
+	glOrtho(0, width, 0, height, -1000, 1000);	// Projeção ortogonal
 }
+
 void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0, 1.0, 0.0);
-
-	glColor3f(1, 0, 0);
-	glPointSize(10.0f);
-	glBegin(GL_POINTS);
-	glVertex2f(width/2, height/2);
-	glEnd();
+	glColor3f(1.0, 0.0, 2.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glTranslated(250, 10, 0);
+	glTranslated(x_pos, y_pos, 0);
+
+	glTranslated(250, 100, 0);
 	glRotatef(rot, 0, 0, 1);
-	glTranslatef(-250, -10, 0);
+	glTranslated(-250, -100, 0);
 
 	// glTranslated(250, 10, 0);
 	// glScalef(2.5, 2.5, 1);
 	// glTranslatef(-250, -10, 0);
 
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0, 1.0, 1.0);
-	glVertex2f(250, 100);
-	glVertex2f(350, 250);
-	glVertex2f(150, 250);
-	glEnd();
+	// glBegin(GL_TRIANGLES);
+	// 	glColor3f(1.0, 1.0, 0.8);
+	// 	glVertex2f(250, 100);
+	// 	glVertex2f(350, 250);
+	// 	glVertex2f(150, 250);
+	// glEnd();
 
+	glutWireTeapot(150);
 
-
-	glFlush(); // Envia o desenho para o framebuffer
+	glFlush();	// Envia o desenho para o framebuffer
 }
 
 void keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'z':
-		rot += 1;
+	case '+':
+		rot += 5;
 		break;
+	case '-':
+		rot -= 5;
+		break;
+
+	case '8':
+		y_pos += 10;
+		break;
+	case '2':
+		y_pos -= 10;
+		break;
+	case '4':
+		x_pos -= 10;
+		break;
+	case '6':
+		x_pos += 10;
+		break;
+
 	case 'q':
 	case 27:
 		exit(0);
