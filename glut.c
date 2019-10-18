@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); // Especifica o buffer a ser utilizado
 	glutInitWindowSize(width, height);			 // Dimensoes da Janela em pixels
 	glutInitWindowPosition(100, 100);			 // Especifica coordenada superior esquerda
-	glutCreateWindow("Janela Inicial");			 // Cria a janela mas só exibe após mainLoop
+	glutCreateWindow(argv[0]);			 // Cria a janela mas só exibe após mainLoop
 	init();
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
@@ -46,11 +46,11 @@ void display(void)
 	// glVertex2f(10, 100);
 	// glVertex2f(200, 150);
 
-	// glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_MODELVIEW);
 
-	// glTranslated(250, 10, 0);
-	// glRotatef(45, 1, 0, 0);
-	// glTranslatef(-250, -10, 0);
+	glTranslated(250, 10, 0);
+	glRotatef(45, 0, 0, 1);
+	glTranslatef(-250, -10, 0);
 
 	// glTranslated(250, 10, 0);
 	// glScalef(2.5, 2.5, 1);
@@ -58,13 +58,13 @@ void display(void)
 
 	glBegin(GL_TRIANGLES);
 	glColor3f(1.0, 1.0, 1.0);
-	glVertex2f(250, 10);
-	glVertex2f(350, 100);
-	glVertex2f(150, 200);
+	glVertex2f(250, 100);
+	glVertex2f(350, 250);
+	glVertex2f(150, 250);
 	glEnd();
 
-	// glMatrixMode(GL_PROJECTION);
-	// glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
 
 	glFlush(); // Envia o desenho para o framebuffer
