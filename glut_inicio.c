@@ -94,3 +94,59 @@ void keyboard(unsigned  char key, int x, int y){
         }
         glutPostRedisplay();
 }
+
+//gcc glut.c -o glut -lGL -lglut
+//./glut
+//RED BOOK OPENGL
+
+//  glBegin(GL_LINE_STRIP);
+//                 glVertex2f(0,0);
+//                 glVertex2f(100,100);ransformadaordenadas dos pontos inicial e final
+//                 glVertex2f(100,100);ransformada
+//                 glVertex2f(200,120);ransformada
+//                 glVertex2f(200,120);
+//                 glVertex2f(0,0);
+//         glEnd();
+
+// glBegin(GL_TRIANGLES);
+//         glColor3f(0.8, 0.4, 0.2);
+//                 glVertex2f(0,0);
+//                 glVertex2f(100,100);  // Coordenadas dos pontos inicial e final
+//                 glVertex2f(200,120);
+
+//                 glColor3f(0.2, 0.8, 1.0);
+//                 glVertex2f(200,120);
+//                 glVertex2f(240,60);
+//                 glVertex2f(0.0,0.0);
+
+//         glEnd();
+
+// glBegin(GL_TRIANGLE_STRIP);
+//         glColor3f(0.8, 0.3, 0.9);
+//                 glVertex2f(100,100);
+//                 glVertex2f(0,0); // Coordenadas dos pontos inicial e final
+//                 glVertex2f(200,120);
+
+//                 glColor3f(0.2, 0.8, 1.0);
+//                 glVertex2f(240,60);
+
+//         glEnd();
+
+// glTranslatef(50,50,00);   TRANSLAÇÃO glTranslatef para float e glTranslated para int
+//         glBegin(GL_TRIANGLES);
+//         glColor3f(0.8, 0.4, 0.2);
+//                 glVertex2f(0,0);
+//                 glVertex2f(100,100);  // Coordenadas dos pontos inicial e final
+//                 glVertex2f(200,0);
+
+//         glEnd();
+
+// glScaled(2,2,1);  ESCALA  ///se for inteiro glScaled e se for float glScalef
+//         glBegin(GL_TRIANGLES);
+//         glColor3f(0.8, 0.4, 0.2);
+//                 glVertex2f(0,0);
+//                 glVertex2f(100,100);  // Coordenadas dos pontos inicial e final
+//                 glVertex2f(200,0);
+//         glEnd();
+
+//GRID
