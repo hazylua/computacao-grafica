@@ -1,12 +1,18 @@
 #include <GL/glut.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <math.h>
 
 int width = 500, height = 500;
 
-int rot = 0;
-int y_pos = 0;
-int x_pos = 0;
+float rad = 0.0174533;
+double pos_x, pos_y, pos_z;
+
+GLfloat matriz_transf[16] = {1, 0, 0, 0,
+							 0, 1, 0, 0,
+							 0, 0, 1, 0,
+							 0, 0, 0, 1};
 
 void init(void);
 void display(void);
@@ -30,25 +36,35 @@ int main(int argc, char **argv)
 
 void init(void)
 {
-	glClearColor(0.0, 1.0, 0.0, 1.0);		// Cor do buffer
+	glClearColor(0, 0, 0, 0); // Cor do buffer
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, width, 0, height, -1000, 1000);	// Projeção ortogonal
+	glOrtho(0, width, 0, height, -1000, 1000); // Projeção ortogonal
 }
 
 void display(void)
 {
+	double rot11, rot12, rot21, rot22;
+	rot11 = cos(rad);
+	rot12 = sin(rad);
+	rot21 = sin(-rad);
+	rot22 = cos(rad);
+
+
+	GLfloat matriz_rot[16] = {rot11, rot12, 0, 0,
+							  rot21, rot22, 0, 0,
+							  0, 0, 1, 0,
+							  pos_x, pos_y, pos_z, 1};
+
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0, 0.0, 2.0);
+	glColor3f(1, 1, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glTranslated(x_pos, y_pos, 0);
-
-	glTranslated(250, 100, 0);
-	glRotatef(rot, 0, 0, 1);
-	glTranslated(-250, -100, 0);
+	// glMultMatrixf(matriz_transf);
+	// glMultMatrixf(matriz_rot);
+	glMultMatrixf(matriz_rot);
 
 	// glTranslated(250, 10, 0);
 	// glScalef(2.5, 2.5, 1);
@@ -63,7 +79,7 @@ void display(void)
 
 	glutWireTeapot(150);
 
-	glFlush();	// Envia o desenho para o framebuffer
+	glFlush(); // Envia o desenho para o framebuffer
 }
 
 void keyboard(unsigned char key, int x, int y)
@@ -71,23 +87,23 @@ void keyboard(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case '+':
-		rot += 5;
+		rad += 0.0174533;
 		break;
 	case '-':
-		rot -= 5;
+		rad -= 0.0174533;
 		break;
 
 	case '8':
-		y_pos += 10;
+		pos_y += 10;
 		break;
 	case '2':
-		y_pos -= 10;
+		pos_y -= 10;
 		break;
 	case '4':
-		x_pos -= 10;
+		pos_x -= 10;
 		break;
 	case '6':
-		x_pos += 10;
+		pos_x += 10;
 		break;
 
 	case 'q':

@@ -1,1 +1,1 @@
-gcc $1 -o glut -lGL -lglut && ./glut
+gcc $1 -o glut -lGL -lglut -lm && ./glut
