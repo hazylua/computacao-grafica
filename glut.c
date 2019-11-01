@@ -7,7 +7,8 @@
 int width = 500, height = 500;
 
 float rad = 0.0174533;
-double pos_x, pos_y, pos_z;
+double pos_x = 250, pos_y = 250, pos_z;
+double scale11 = 1, scale22 = 1, scale33 = 1;
 
 GLfloat matriz_transf[16] = {1, 0, 0, 0,
 							 0, 1, 0, 0,
@@ -45,15 +46,15 @@ void init(void)
 void display(void)
 {
 	double rot11, rot12, rot21, rot22;
+
 	rot11 = cos(rad);
 	rot12 = sin(rad);
 	rot21 = sin(-rad);
 	rot22 = cos(rad);
 
-
-	GLfloat matriz_rot[16] = {rot11, rot12, 0, 0,
-							  rot21, rot22, 0, 0,
-							  0, 0, 1, 0,
+	GLfloat matriz_rot[16] = {rot11 * scale11, rot12, 0, 0,
+							  rot21, rot22 * scale22, 0, 0,
+							  0, 0, scale33, 0,
 							  pos_x, pos_y, pos_z, 1};
 
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -77,7 +78,7 @@ void display(void)
 	// 	glVertex2f(150, 250);
 	// glEnd();
 
-	glutWireTeapot(150);
+	glutWireTeapot(100);
 
 	glFlush(); // Envia o desenho para o framebuffer
 }
@@ -104,6 +105,18 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case '6':
 		pos_x += 10;
+		break;
+
+	case '/':
+		scale11 -= 0.1;
+		scale22 -= 0.1;
+		scale33 -= 0.1;
+		break;
+
+	case '*':
+		scale11 += 0.1;
+		scale22 += 0.1;
+		scale33 += 0.1;
 		break;
 
 	case 'q':
