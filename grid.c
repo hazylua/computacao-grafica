@@ -4,16 +4,11 @@
 #include <unistd.h>
 #include <math.h>
 
-int width = 1000, height = 700;
+const int width = 500, height = 500;
 
-float rad = 0.0174533;
+float rad = 0, alpha = 0, beta = 0;
 double pos_x = 0, pos_y = 0, pos_z = 0;
 double scale11 = 1, scale22 = 1, scale33 = 1;
-
-// GLfloat matriz_transf[16] = {1, 0, 0, 0,
-//                              0, 1, 0, 0,
-//                              0, 0, 1, 0,
-//                              0, 0, 0, 1};
 
 void init(void);
 void display(void);
@@ -76,23 +71,24 @@ void grid(void)
 
 void square(void)
 {
-    glColor3f(0, 0, 0);
+    glColor3f(0.2, 0.0, 0.4);
     glBegin(GL_QUADS);
-    glVertex2d(width / 2, height / 2);
-    glVertex2d(width / 2, height / 2 + 100);
-    glVertex2d(width / 2 + 100, height / 2 + 100);
-    glVertex2d(width / 2 + 100, height / 2);
+    glVertex2d(-100, 100);
+    glVertex2d(100, 100);
+    glVertex2d(100, -100);
+    glVertex2d(-100, -100);
     glEnd();
 }
 
 void display(void)
 {
-    GLfloat matriz_transf[16] = {1, 0, 0, 0,
-                                 0, 1, 0, 0,
-                                 0, 0, 1, 0,
-                                 pos_x, pos_y, pos_z, 1};
+    GLfloat matriz_transf[16] = {1*cos(rad), sin(rad), 0, 0,
+                                 -1*sin(rad), 1*cos(rad)*cos(alpha), sin(alpha), 0,
+                                 0, -1*sin(alpha), cos(alpha), 0,
+                                 pos_x + width/2, pos_y + height/2, 0, 1};
 
     glClear(GL_COLOR_BUFFER_BIT); // Limpa para a cor do buffer
+    
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -105,7 +101,9 @@ void display(void)
     glPopMatrix();
 
     // glFlush(); // Envia o desenho para o framebuffer
-    printf("pos_x = %0.2f, pos_y = %0.2f, pos_z = %0.2f\n", pos_x, pos_y, pos_z);
+    printf("LOG:\n"
+            "pos_x = %0.2f, pos_y = %0.2f, pos_z = %0.2f\n"
+            "rad = %0.5f, degrees = %0.1f\n\n", pos_x, pos_y, pos_z, rad, rad*180/3.14);
     glutSwapBuffers();
 }
 
@@ -150,15 +148,17 @@ void keyboard(unsigned char key, int x, int y)
         break;
 
     case '/':
-        scale11 -= 0.1;
-        scale22 -= 0.1;
-        scale33 -= 0.1;
+        alpha += 0.0174533;
+        // scale11 -= 0.1;
+        // scale22 -= 0.1;
+        // scale33 -= 0.1;
         break;
 
     case '*':
-        scale11 += 0.1;
-        scale22 += 0.1;
-        scale33 += 0.1;
+        alpha -= 0.0174533;
+        // scale11 += 0.1;
+        // scale22 += 0.1;
+        // scale33 += 0.1;
         break;
 
     case 'q':
