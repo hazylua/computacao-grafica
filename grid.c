@@ -94,15 +94,19 @@ void display(void)
 
     glClear(GL_COLOR_BUFFER_BIT); // Limpa para a cor do buffer
 
-    glColor3f(0, 0, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    grid();
+
+    glPushMatrix();
     glMultMatrixf(matriz_transf);
-
     square();
+    glPopMatrix();
 
-    glFlush(); // Envia o desenho para o framebuffer
+    // glFlush(); // Envia o desenho para o framebuffer
+    printf("pos_x = %0.2f, pos_y = %0.2f, pos_z = %0.2f\n", pos_x, pos_y, pos_z);
+    glutSwapBuffers();
 }
 
 void keyboard(unsigned char key, int x, int y)
@@ -127,6 +131,22 @@ void keyboard(unsigned char key, int x, int y)
         break;
     case '6':
         pos_x += 10;
+        break;
+    case '9':
+        pos_x += 10;
+        pos_y += 10;
+        break;
+    case '7':
+        pos_x -= 10;
+        pos_y += 10;
+        break;
+    case '1':
+        pos_x -= 10;
+        pos_y -= 10;
+        break;
+    case '3':
+        pos_x += 10;
+        pos_y -= 10;
         break;
 
     case '/':
